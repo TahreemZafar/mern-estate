@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/OAuth";
 
 
 const SignUp = () => {
@@ -62,19 +63,18 @@ const SignUp = () => {
 
   return (
     <div className="p-3 max-w-md mx-auto lg:max-w-lg">
-         <h1 className="text-3xl text-center font-semibold my-12">Sign Up</h1>
+         <h1 className="text-3xl text-center font-semibold my-12">Create an Account</h1>
          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
              <input type="text" placeholder="Username" className="border-2 p-3" id="username" onChange={handleChange} />
              <input type="text" placeholder="Email" className="border p-3" id="email" onChange={handleChange} />
              <input type="password" placeholder="Password" className="border p-3" id="password" onChange={handleChange} />
-             <div className="flex flex-row gap-4 mx-auto">
-             <button className="bg-sky-600 text-white font-medium w-64 mt-5 p-3 rounded-lg hover:opacity-80 disabled:opacity-50"> Continue with Google</button>
-
+             <div className="flex flex-row gap-4 mx-auto items-center">
+               <OAuth color="bg-sky-600" />
              <button disabled={loading} className="bg-cyan-600 text-white font-medium w-36 mt-5 p-3 rounded-lg hover:opacity-80 disabled:opacity-50"> { loading ? "loading..." : "Sign Up" }</button>
              </div>
          </form>
 
-         {error && <p className="text-red-500 mt-5">{error}</p> }
+         {error && <p className="text-red-500 mt-5 text-center">{error}</p> }
 
          <div className="flex flex-row gap-2 mt-5 justify-center items-center">
              <p>Already have an Account?</p>
