@@ -1,4 +1,3 @@
-'use client';
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -67,13 +66,14 @@ const SignIn = () => {
          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
              <input type="text" placeholder="Email" className="border p-3" id="email" onChange={handleChange} />
              <input type="password" placeholder="Password" className="border p-3" id="password" onChange={handleChange} />
-             <div className="flex flex-row gap-4 mx-auto items-center">
+           
+             <div className="flex flex-col sm:flex-row gap-4 mx-auto items-center">
                <OAuth color="bg-cyan-600" />
-             <button disabled={loading} className="bg-sky-600 text-white font-medium w-36 mt-5 p-3 rounded-lg hover:opacity-80 disabled:opacity-50"> { loading ? "loading..." : "Sign In" }</button>
+             <button disabled={loading} className="bg-sky-600 text-white font-medium w-80 sm:w-36 sm:mt-5 p-4 sm:p-3 rounded-lg hover:opacity-80 disabled:opacity-50"> { loading ? "loading..." : "Sign In" }</button>
              </div>
          </form>
 
-         {error && <p className="text-red-500 mt-5 text-center">{error}</p> }
+          <p className="text-red-500 mt-5 text-center">{error ? error : '' }</p> 
 
          <div className="flex flex-row gap-2 mt-5 justify-center items-center">
              <p>Don't have an Account?</p>

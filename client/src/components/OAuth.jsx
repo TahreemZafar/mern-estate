@@ -37,7 +37,7 @@ const OAuth = ({color}) => {
     }
 
   return (
-    <button onClick={handleGoogleClick} type='button' className={`text-white ${color} font-medium w-64 mt-5 p-3 
+    <button onClick={handleGoogleClick} type='button' className={`text-white ${color} font-medium w-80 sm:w-64 mt-5 p-4 sm:p-3 
     rounded-lg hover:opacity-80 disabled:opacity-50`}>Continue with Google</button>
   )
 }
