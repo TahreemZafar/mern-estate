@@ -1,13 +1,41 @@
 import { FaSearch } from "react-icons/fa"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const Header = () => {
 
-  const { currentUser } = useSelector(state => state.user)
+  const [ searchTerm, setSearchTerm ] = useState('');
+
+  const { currentUser } = useSelector(state => state.user);
+  const navigate = useNavigate();
+
+
+  const handleSubmit = (e) => {
+     e.preventDefault();
+     const urlParams = new URLSearchParams(window.location.search);
+     urlParams.set('searchTerm', searchTerm);
+     const searchQuery = urlParams.toString();
+     navigate(`/search?${searchQuery}`);
+
+  };
+
+
+
+  useEffect(() => {
+
+    const urlParams = new URLSearchParams(location.search);
+    const urlSearchTerm = urlParams.get('searchTerm');
+
+    if (urlSearchTerm) {
+      setSearchTerm(urlSearchTerm);
+    }
+
+  },[location.search])
+
 
   return (
-    <header className=" bg-header1 shadow-md">
+    <header className=" bg-header1 shadow-xl top-0 sticky z-50">
         <div className="flex justify-between items-center max-w-6xl mx-auto p-4">
             <Link to="/">
         <h1 className="font-bold text-md sm:text-xl flex flex-wrap">
@@ -16,10 +44,15 @@ const Header = () => {
         </h1>
         </Link>
 
-         <form className="bg-slate-50 p-3 flex items-center shadow-sm">
-             <input type="text" placeholder="Search..."
-             className="bg-transparent w-32 sm:w-40 md:w-60 lg:w-64 focus:outline-none" />
+         <form onSubmit={handleSubmit} className="bg-slate-50 p-3 flex items-center shadow-sm">
+             <input name="Search" type="text" placeholder="Search..."
+             className="bg-transparent w-32 sm:w-40 md:w-60 lg:w-64 focus:outline-none"
+             value={searchTerm}
+             onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button>
              <FaSearch className="text-slate-600" />
+             </button>
          </form>
 
            <ul className="flex gap-4 font-medium items-center">

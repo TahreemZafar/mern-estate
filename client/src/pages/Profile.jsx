@@ -28,6 +28,8 @@ const Profile = () => {
   const [fileErr, setFileErr] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [listError, setListError] = useState(false);
+  const [userListings, setUserListings] = useState([]);
 
   console.log(formData);
 
@@ -149,6 +151,55 @@ const Profile = () => {
       }
   }
 
+ 
+  const handleShowListings = async () => {
+
+    try {
+
+       setListError(false);
+
+       const res = await fetch(`/api/user/listing/${currentUser._id}`);
+
+       const data = await res.json();
+
+       if (data.success === false) {
+        setListError(true);
+        return;
+       }
+
+       setUserListings(data);
+      
+    } catch (error) {
+      setListError(true)
+    }
+
+  }
+
+
+  const handleDeleteListing = async (listingId) => {
+
+    try {
+
+      const res = await fetch(`/api/listing/delete/${listingId} `, {
+        method: 'DELETE',
+      
+      });
+
+       const data = await res.json();
+
+       if (data.success === false) {
+          console.log(data.message);
+          return;
+       }
+
+       setUserListings((prev) => prev.filter((listng) => listng._id !== listingId ) )
+      
+    } catch (error) {
+       console.log(error.message);
+    }
+
+  }
+
 
 
   return (
@@ -260,6 +311,58 @@ const Profile = () => {
           Sign Out
         </span>
       </div>
+
+
+       <button className="mt-8 sm:ml-14 text-center lg:ml-20 w-full sm:w-80 mb-5
+         bg-teal-600 text-white py-4 px-6 font-medium" onClick={handleShowListings} >Show Listings</button>
+
+         <p className="text-red-600 mt-5 text-center font-medium"> { listError ? 'An Error ocurred while Showing Listings!' : '' } </p>
+
+          { userListings && userListings.length > 0 && 
+
+             <div className="">
+
+              <h1 className="font-semibold text-2xl text-center mb-10">Your Listings</h1>
+
+            { userListings.map((listing) => (
+
+               
+               <div key={listing._id} className="flex justify-between border border-gray-400 m-5 ml-0 px-2 w-full items-center gap-4 cursor-pointer hover:shadow-lg ">
+                   <div className="flex items-center gap-3">
+                  <Link to={`/listing/${listing._id}`}>
+                      
+                  <img src={listing.imageUrls[0]} alt="Your Listing Image" className="w-32 h-28 object-contain" />
+
+                     </Link>
+
+                  <Link className="flex-1" to={`/listing/${listing._id}`}>
+                      
+                   <h1 className=" line-clamp-1 font-medium hover:underline
+                   ">{listing.name}</h1>
+
+
+                     </Link>
+                     </div>
+
+                     <div className="flex flex-col mt-2 ">
+
+                     <button type="button" onClick={() => handleDeleteListing(listing._id)} className="text-red-700 font-medium px-2 py-1 border-2 border-red-700 hover:bg-red-700 hover:text-white hover:cursor-pointer">Delete</button>
+
+                       <Link to={`/update-listing/${listing._id}`}>
+                     <button type="button" className="bg-sky-600 text-white font-medium p-2 w-24 h-10 my-2 hover:opacity-80 hover:cursor-pointer">Update</button>
+                     </Link>
+
+
+                     </div>
+
+               </div>
+
+             )) }
+             </div>
+
+          }
+
+
     </div>
   );
 };
