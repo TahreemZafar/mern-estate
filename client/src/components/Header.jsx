@@ -35,7 +35,7 @@ const Header = () => {
 
 
   return (
-    <header className=" bg-header1 shadow-xl top-0 sticky z-50">
+    <header className=" bg-header1 shadow-xl top-0 sticky z-30">
         <div className="flex justify-between items-center max-w-6xl mx-auto p-4">
             <Link to="/">
         <h1 className="font-bold text-md sm:text-xl flex flex-wrap">

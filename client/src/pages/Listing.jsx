@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
-import { useSelector } from 'react-redux';
 import { Navigation } from 'swiper/modules';
+import { useParams } from 'react-router-dom';
 import 'swiper/css/bundle';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   FaMapMarkerAlt,
   FaShare,
@@ -62,11 +62,14 @@ export default function Listing() {
               <SwiperSlide key={url}>
                 <div
                   className='h-[550px] border-b-2 border-spacing-6 border-gray-600'
-                  style={{
-                    background: `url(${url}) center no-repeat`,
+                  style={url ? {
+                    background: `url(${url} ) center no-repeat`,
                     backgroundSize: 'cover',
                     
-                  }}
+                  } : {
+                    backgroundImage: url('https://i.pinimg.com/736x/db/68/6d/db686d6737108e7570890b283b1b9d1d.jpg')
+                  }  
+                }
                 ></div>
               </SwiperSlide>
             ))}
@@ -141,8 +144,8 @@ export default function Listing() {
               <li className='flex items-center gap-2 whitespace-nowrap border border-gray-800 p-4 px-5 hover:bg-sky-200'>
                 <PiBathtubBold size={24} className='text-lg' />
                 {listing.bathrooms > 1
-                  ? `${listing.bathrooms} baths `
-                  : `${listing.bathrooms} bath `}
+                  ? `${listing.bathrooms} bathrooms `
+                  : `${listing.bathrooms} bathroom `}
               </li>
               <li className='flex items-center gap-2 whitespace-nowrap border border-gray-800 p-4 px-5 hover:bg-sky-200'>
                 <LuParkingCircle size={24} className='text-lg' />
