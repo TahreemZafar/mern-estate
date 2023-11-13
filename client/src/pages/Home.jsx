@@ -7,7 +7,7 @@ import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
 import ListingItem from '../components/ListingItem';
 import { BsArrowRight } from 'react-icons/bs';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 
 
 const Home = () => {
