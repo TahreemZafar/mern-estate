@@ -3,7 +3,7 @@
       {
         "src": "build/*",
         "use": "@vercel/static",
-        "outputDirectory": "/client/public"
+        "outputDirectory": "client/"
       }
     ]
   }
